@@ -23,14 +23,13 @@ dependencies = [
     "ipykernel>=7.1.0",
     "pandas>=2.3.3",
     "onnxruntime-gpu>=1.23.2",
-    "pytest[dev]>=9.0.1",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=9.0.1",
-    "pylint>=4.0.3",
-    "black>=25.11.0",
+    "pytest>=8.0.0",
+    "pylint>=3.0.0",
+    "black>=24.0.0",
     "isort"
 ]
 
