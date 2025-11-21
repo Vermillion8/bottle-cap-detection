@@ -1,6 +1,4 @@
 [build-system]
-# We need a build backend for uv to install in editable mode (-e)
-# Hatchling is a modern, fast, and standard choice.
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
@@ -10,15 +8,14 @@ version = "0.1.0"
 description = "Bottle cap sorting model development and ML pipeline."
 license = "MIT"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.12.6"
 
-# Core dependencies for the project
 dependencies = [
-    "ultralytics", # For YOLOv8
-    "opencv-python-headless", # For image processing (data relabeling)
-    "typer", # For the CLI (bsort)
-    "pyyaml", # For loading settings.yaml
-    "wandb", # For experiment tracking # For image array manipulation
+    "ultralytics",
+    "opencv-python-headless",
+    "typer",
+    "pyyaml",
+    "wandb",
     "numpy",
     "torch",
     "torchvision",
@@ -26,58 +23,43 @@ dependencies = [
     "ipykernel>=7.1.0",
     "pandas>=2.3.3",
     "onnxruntime-gpu>=1.23.2",
-    "pytest>=9.0.1",
+    "pytest[dev]>=9.0.1",
 ]
 
 [project.optional-dependencies]
-# Dependencies only for development (testing, linting)
 dev = [
-    "pytest",                # For unit testing
-    "pylint",                # For code checking
-    "black",                 # For code formatting
-    "isort"                  # For import sorting
+    "pytest>=9.0.1",
+    "pylint>=4.0.3",
+    "black>=25.11.0",
+    "isort"
 ]
 
 [project.scripts]
-# This makes the "bsort" command available in your shell
-# It points to the "app" object in the "bsort/main.py" file
 bsort = "bsort.main:app"
 
 [tool.hatch.metadata]
-# Allow hatchling to discover the license file
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-# Explicitly tell hatchling where to find the package
 packages = ["bsort"]
+
+[tool.uv]
+sources = { torch = { index = "pytorch" }, torchvision = { index = "pytorch" }, torchaudio = { index = "pytorch" } }
+
+[tool.pylint.main]
+extension-pkg-allow-list = ["cv2"]
+
+[tool.pylint.messages_control]
+disable = [
+    "R0914",
+    "R0915",
+    "W1203",
+]
+
+[tool.pylint.typecheck]
+generated-members = ["cv2.*"]
 
 [[tool.uv.index]]
 name = "pytorch"
 url = "https://download.pytorch.org/whl/cu130"
 explicit = true
-
-[tool.uv]
-sources = { torch = { index = "pytorch" }, torchvision = { index = "pytorch" }, torchaudio = { index = "pytorch" } }
-
-[dependency-groups]
-dev = [
-    "black>=25.11.0",
-    "pylint>=4.0.3",
-    "pytest>=9.0.1",
-]
-
-# --- Pylint Configuration ---
-[tool.pylint.main]
-# Tells Pylint to load the OpenCV extension so it stops yelling about 'no-member'
-extension-pkg-allow-list = ["cv2"]
-
-[tool.pylint.messages_control]
-disable = [
-    "R0914", # Too many local variables (We accept this complexity)
-    "R0915", # Too many statements (We accept this complexity)
-    "W1203", # Use lazy % formatting (We prefer f-strings, they are readable)
-]
-
-[tool.pylint.typecheck]
-# Just in case extension-pkg-allow-list doesn't catch everything
-generated-members = ["cv2.*"]
