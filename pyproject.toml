@@ -42,9 +42,6 @@ allow-direct-references = true
 [tool.hatch.build.targets.wheel]
 packages = ["bsort"]
 
-[tool.uv]
-sources = { torch = { index = "pytorch" }, torchvision = { index = "pytorch" }, torchaudio = { index = "pytorch" } }
-
 [tool.pylint.main]
 extension-pkg-allow-list = ["cv2"]
 
@@ -58,7 +55,7 @@ disable = [
 [tool.pylint.typecheck]
 generated-members = ["cv2.*"]
 
-[[tool.uv.index]]
+[[tool.uv.sources]]
 name = "pytorch"
 url = "https://download.pytorch.org/whl/cu130"
 explicit = true
