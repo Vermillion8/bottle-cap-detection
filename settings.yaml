@@ -1,0 +1,25 @@
+project:
+  name: "bottle_cap_sorter"
+  output_dir: "runs"
+
+data:
+  # Path to the dataset.yaml file we created
+  dataset_yaml: "./dataset_yolo_aug/dataset.yaml"
+  source_image_dir: "data/images"
+  
+model:
+  name: "yolov8n.pt"
+  # To hit 5-10ms on Edge devices, we MUST reduce image size (640 is too slow for Pi 5 CPU)
+  img_size: 320 
+  
+train:
+  epochs: 100
+  batch_size: 8
+  learning_rate: 0.01
+  device: "cuda" # or "cpu"
+  workers: 0     # Keep 0 for Windows stability
+  mosaic: 0.0    # Keep disabled as we found it helps
+
+inference:
+  confidence_threshold: 0.5
+  export_format: "onnx" # Required for fast inference on Edge

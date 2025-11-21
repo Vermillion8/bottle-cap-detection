@@ -1,0 +1,41 @@
+# --- Python & Environment ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# --- Distribution / Packaging ---
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# --- Unit Testing ---
+.pytest_cache/
+.coverage
+htmlcov/
+
+# --- IDE Settings (Optional but recommended) ---
+.vscode/
+.idea/
+.DS_Store
+
+# --- Project Specific: Data & Generated Datasets ---
+data_augmented/
+dataset_yolo/
+dataset_yolo_aug/
+
+# --- Project Specific: Training Outputs ---
+runs/
+wandb/
+
+# --- Model Weights ---
+*.pt
+*.onnx
+*.engine
+*.tflite
+
+# --- Specific Model Files in your root ---
+yolov8n.pt
+yolo11n.pt
